@@ -9,21 +9,25 @@ interface FileCardProps {
 const fileRoutes = baseURL + '/files/'
 export const FileCard = ({ file }: FileCardProps): JSX.Element => {
   async function handleDownload() {
-    const fileEncrypted = await urlToFile(fileRoutes + file.path, file.name)
-    const secret = prompt('Informe a senha')
-    if (!secret) {
-      return
+    try {
+      const fileEncrypted = await urlToFile(fileRoutes + file.path, file.name)
+      const secret = prompt('Informe a senha')
+      if (!secret) {
+        return
+      }
+      const fileToDownload = await decrypted(fileEncrypted, secret)
+
+      const aElement = document.createElement('a')
+      aElement.setAttribute('download', file.name)
+      const href = URL.createObjectURL(fileToDownload)
+      aElement.href = href
+      aElement.setAttribute('target', '_blank')
+      aElement.click()
+
+      URL.revokeObjectURL(href)
+    } catch (error) {
+      alert(error)
     }
-    const fileToDownload = await decrypted(fileEncrypted, secret)
-
-    const aElement = document.createElement('a')
-    aElement.setAttribute('download', file.name)
-    const href = URL.createObjectURL(fileToDownload)
-    aElement.href = href
-    aElement.setAttribute('target', '_blank')
-    aElement.click()
-
-    URL.revokeObjectURL(href)
   }
   return (
     <div

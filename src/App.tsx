@@ -38,7 +38,9 @@ function App() {
       })
 
       setFiles([...files, newFile.data])
-    } catch (error) {}
+    } catch (error) {
+      alert(error)
+    }
   }
 
   return (
