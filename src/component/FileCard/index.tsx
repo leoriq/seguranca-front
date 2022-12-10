@@ -26,13 +26,18 @@ export const FileCard = ({ file }: FileCardProps): JSX.Element => {
     URL.revokeObjectURL(href)
   }
   return (
-    <div key={file.id}>
+    <div
+      key={file.id}
+      style={{
+        border: '1px solid #c6c6c6',
+        margin: '10px',
+        padding: '6px',
+        borderRadius: '8px',
+      }}
+    >
       <p>{file.name}</p>
-      <a href={fileRoutes + file.path} download>
-        Download
-      </a>
       <button type="button" onClick={() => handleDownload()}>
-        Download 2
+        Download
       </button>
     </div>
   )

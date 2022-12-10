@@ -28,8 +28,6 @@ function App() {
     if (!fileToUpload) return
     var formData = new FormData()
     try {
-      // const fileContent = await fileToBase64(fileToUpload)
-      // if (typeof fileContent === 'string') {
       const encryptedFile = await encrypt(fileToUpload, secret)
       formData.append('file', encryptedFile)
 
@@ -45,14 +43,20 @@ function App() {
 
   return (
     <>
-      <input
-        type="file"
-        onChange={(e) => setFileToUpload(e.target.files?.[0])}
-      />
-      <input type="text" onChange={(e) => setSecret(e.target.value)} />
-      <button type="button" onClick={handleSubmit}>
-        Enviar
-      </button>
+      <div style={{ margin: '10px', padding: '6px' }}>
+        <input
+          type="file"
+          onChange={(e) => setFileToUpload(e.target.files?.[0])}
+        />
+        <input
+          type="text"
+          placeholder="senha"
+          onChange={(e) => setSecret(e.target.value)}
+        />
+        <button type="button" onClick={handleSubmit}>
+          Enviar
+        </button>
+      </div>
       {files.map((file) => (
         <FileCard key={file.id} file={file} />
       ))}
