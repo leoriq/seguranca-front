@@ -3,10 +3,7 @@ export const fileToBase64 = (
 ): Promise<string | ArrayBuffer | null> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
-    reader.onload = () => {
-      console.log('reader.result', reader.result, typeof reader.result)
-      return resolve(reader.result)
-    }
+    reader.onload = () => resolve(reader.result)
     reader.onerror = (error) => reject(error)
     reader.readAsDataURL(file)
   })
